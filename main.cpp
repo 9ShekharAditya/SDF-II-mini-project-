@@ -5,21 +5,29 @@ using namespace std;
 
 class Account
 {
-protected:
+public:
     int accNo;
     string name;
     string ifsc;
     double balance;
 
-public:
-
     static const int MAX = 100;
     static Account accounts[MAX];
     static int totalAccounts;
 
-    int findAccount(int number)
+    Account() {}
+
+    Account(int a, string n, string i, double b)
     {
-        for(int i = 0; i < totalAccounts; i++)
+        accNo = a;
+        name = n;
+        ifsc = i;
+        balance = b;
+    }
+
+    static int findAccount(int number)
+    {
+        for(int i=0;i<totalAccounts;i++)
         {
             if(accounts[i].accNo == number)
                 return i;
@@ -28,13 +36,12 @@ public:
     }
 };
 
-Account Account::accounts[MAX];
+Account Account::accounts[Account::MAX];
 int Account::totalAccounts = 0;
 
 class Deposit : public Account
 {
 public:
-
     void depositMoney()
     {
         int number;
@@ -44,11 +51,11 @@ public:
         cout << "Enter Account Number: ";
         cin >> number;
 
-        int index = findAccount(number);
+        int index = Account::findAccount(number);
 
         if(index == -1)
         {
-            cout << "Account not found.\n";
+            cout << "Account not found\n";
             return;
         }
 
@@ -57,13 +64,13 @@ public:
 
         if(amount <= 0)
         {
-            cout << "Invalid amount.\n";
+            cout << "Invalid amount\n";
             return;
         }
 
         accounts[index].balance += amount;
 
-        cout << "[DEPOSIT SUCCESSFUL]\n";
+        cout << "Deposit Successful\n";
         cout << "New Balance: " << accounts[index].balance << endl;
     }
 };
@@ -72,32 +79,26 @@ class Withdrawal : public Account
 {
 public:
 
-    bool withdrawMoney(int number, double amount)
+    bool withdrawMoney(int number,double amount)
     {
-        int index = findAccount(number);
+        int index = Account::findAccount(number);
 
         if(index == -1)
         {
-            cout << "Account not found.\n";
-            return false;
-        }
-
-        if(amount <= 0)
-        {
-            cout << "Invalid withdrawal amount.\n";
+            cout<<"Account not found\n";
             return false;
         }
 
         if(accounts[index].balance < amount)
         {
-            cout << "[INSUFFICIENT BALANCE]\n";
+            cout<<"Insufficient Balance\n";
             return false;
         }
 
         accounts[index].balance -= amount;
 
-        cout << "[WITHDRAWAL SUCCESSFUL]\n";
-        cout << "Remaining Balance: " << accounts[index].balance << endl;
+        cout<<"Withdrawal Successful\n";
+        cout<<"Remaining Balance: "<<accounts[index].balance<<endl;
 
         return true;
     }
@@ -109,61 +110,51 @@ public:
 
     void depositCheque()
     {
-        int sender, receiver;
-        string holderName, ifsc;
+        int sender,receiver;
+        string holderName,ifsc;
         double amount;
 
-        cout << "\n--- CHEQUE TRANSFER ---\n";
+        cout<<"\n--- CHEQUE TRANSFER ---\n";
 
-        cout << "Enter Sender Account: ";
-        cin >> sender;
+        cout<<"Enter Sender Account: ";
+        cin>>sender;
 
-        cout << "Enter Receiver Account: ";
-        cin >> receiver;
+        cout<<"Enter Receiver Account: ";
+        cin>>receiver;
 
-        int senderIndex = findAccount(sender);
-        int receiverIndex = findAccount(receiver);
+        int senderIndex = Account::findAccount(sender);
+        int receiverIndex = Account::findAccount(receiver);
 
-        if(senderIndex == -1 || receiverIndex == -1)
+        if(senderIndex==-1 || receiverIndex==-1)
         {
-            cout << "Account verification failed.\n";
+            cout<<"Account verification failed\n";
             return;
         }
 
-        cout << "Enter Receiver Name: ";
-        cin >> holderName;
+        cout<<"Enter Receiver Name: ";
+        cin>>holderName;
 
-        cout << "Enter IFSC Code: ";
-        cin >> ifsc;
+        cout<<"Enter IFSC Code: ";
+        cin>>ifsc;
 
-        if(accounts[receiverIndex].name != holderName ||
-           accounts[receiverIndex].ifsc != ifsc)
+        if(accounts[receiverIndex].name!=holderName ||
+           accounts[receiverIndex].ifsc!=ifsc)
         {
-            cout << "[CHEQUE VERIFICATION FAILED]\n";
+            cout<<"Cheque verification failed\n";
             return;
         }
 
-        cout << "Enter Cheque Amount: ";
-        cin >> amount;
+        cout<<"Enter Amount: ";
+        cin>>amount;
 
-        if(amount <= 0)
-        {
-            cout << "Invalid cheque amount.\n";
-            return;
-        }
-
-        bool success = withdrawMoney(sender, amount);
-
-        if(success)
+        if(withdrawMoney(sender,amount))
         {
             accounts[receiverIndex].balance += amount;
-
-            cout << "[CHEQUE DEPOSIT SUCCESSFUL]\n";
-            cout << "Amount transferred successfully.\n";
+            cout<<"Cheque Transfer Successful\n";
         }
         else
         {
-            cout << "[CHEQUE BOUNCED]\n";
+            cout<<"Cheque Bounced\n";
         }
     }
 };
@@ -174,25 +165,23 @@ int main()
     Withdrawal w;
     ChequeTransfer c;
 
-    int choice;
-
-    // Sample accounts for testing
-    Account::accounts[0] = {101, "Rahul", "SBIN001", 5000};
-    Account::accounts[1] = {102, "Amit", "SBIN001", 3000};
-    Account::accounts[2] = {103, "Priya", "SBIN002", 7000};
+    Account::accounts[0] = Account(101,"Rahul","SBIN001",5000);
+    Account::accounts[1] = Account(102,"Amit","SBIN001",3000);
+    Account::accounts[2] = Account(103,"Priya","SBIN002",7000);
 
     Account::totalAccounts = 3;
 
+    int choice;
+
     do
     {
-        cout << "\n===== BANKING SYSTEM MENU =====\n";
-        cout << "1. Deposit Money\n";
-        cout << "2. Withdraw Money\n";
-        cout << "3. Cheque Transfer\n";
-        cout << "4. Exit\n";
-        cout << "Enter your choice: ";
+        cout<<"\n===== BANK MENU =====\n";
+        cout<<"1 Deposit\n";
+        cout<<"2 Withdraw\n";
+        cout<<"3 Cheque Transfer\n";
+        cout<<"4 Exit\n";
 
-        cin >> choice;
+        cin>>choice;
 
         switch(choice)
         {
@@ -202,32 +191,25 @@ int main()
 
             case 2:
             {
-                int accNo;
-                double amount;
+                int acc;
+                double amt;
 
-                cout << "Enter Account Number: ";
-                cin >> accNo;
+                cout<<"Enter Account Number: ";
+                cin>>acc;
 
-                cout << "Enter Amount: ";
-                cin >> amount;
+                cout<<"Enter Amount: ";
+                cin>>amt;
 
-                w.withdrawMoney(accNo, amount);
+                w.withdrawMoney(acc,amt);
                 break;
             }
 
             case 3:
                 c.depositCheque();
                 break;
-
-            case 4:
-                cout << "Exiting system...\n";
-                break;
-
-            default:
-                cout << "Invalid choice.\n";
         }
 
-    } while(choice != 4);
+    }while(choice!=4);
 
     return 0;
 }
