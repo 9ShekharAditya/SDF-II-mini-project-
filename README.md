@@ -6,7 +6,7 @@ Contributors:
 
 1.Krish Sharma
 
-2.Raghav Bansal(Thicc Ass)
+2.Raghav Bansal
 
 3.Aditya Barnwal
 
