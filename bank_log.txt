@@ -1,0 +1,13 @@
+[2026-05-03 19:19:53] No accounts file; started fresh.
+[2026-05-03 19:21:01] Accounts saved (0 records).
+[2026-05-03 19:21:05] Loaded 0 accounts.
+[2026-05-03 20:46:14] Loaded 0 accounts.
+[2026-05-03 21:32:42] Loaded 0 accounts.
+[2026-05-03 21:33:44] Account created: #123 (Aditya)
+[2026-05-03 21:33:44] Accounts saved (1 records).
+[2026-05-03 21:37:23] Deposit: ₹1000.000000 -> Acc#123
+[2026-05-03 21:37:23] Accounts saved (1 records).
+[2026-05-03 21:38:19] Accounts saved (1 records).
+[2026-05-04 11:28:01] Loaded 1 accounts.
+[2026-05-04 11:37:14] Account created: #1234 (Raghav)
+[2026-05-04 11:37:14] Accounts saved (2 records).
